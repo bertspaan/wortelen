@@ -1,28 +1,79 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <main>
+      <div class="map-container">
+        <div id="map" ref="map"/>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+
+  },
+  data () {
+    return {
+      map: undefined
+    }
+  },
+  mounted: function () {
+    // eslint-disable-next-line
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'https://ta.webmapper.nl/wm/styles/topography.json',
+      center: [4.922, 52.369],
+      zoom: 9,
+      hash: true
+    })
+
+    map.on('load', () => {
+
+    })
+
+    this.map = map
   }
 }
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+  /* max-width: 1000px; */
+  margin: 0 auto;
+}
+
+main {
+  flex-grow: 1;
+  position: relative;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-container {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 </style>
